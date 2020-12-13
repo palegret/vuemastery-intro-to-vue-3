@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Vue Mastery</title>
+    <link rel="icon" type="image/x-icon" href="https://www.vuemastery.com/assets/icons/favicon.ico">
     <link rel="stylesheet" href="./assets/styles.css" />
     <script src="https://unpkg.com/vue@3.0.4/dist/vue.global.js"></script>
   </head>
@@ -24,8 +25,17 @@
             <ul>
               <li v-for="detail in details">{{ detail }}</li>
             </ul>
-            <div v-for="variant in variants" :key="variant.id">{{ variant.color }}</div>
+            <div
+              v-for="variant in variants"
+              :key="variant.id"
+              @mouseover="updateImage(variant.image)"
+            >
+              {{ variant.color }}
+            </div>
             <div v-for="size in sizes" :key="size">{{ size }}</div>
+            <div class="cart">Cart({{ cart }})</div>
+            <button class="button" :disabled="inventory <= 0" @click="addToCart">Add to Cart</button>
+            <button class="button" :disabled="inventory <= 0 || cart === 0" @click="removeFromCart">Remove from Cart</button>
           </div>
         </div>
       </div>
