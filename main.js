@@ -4,8 +4,8 @@ const app = Vue.createApp({
       product: 'Socks',
       description: 'A comfy pair of socks.',
       image: './assets/images/socks_green.jpg',
-      inStock: true,
       inventory: 100,
+      reorderQuantity: 10,
       onSale: true,
       details: ['50% cotton', '30% wool', '20% polyester'],
       variants: [
@@ -27,6 +27,17 @@ const app = Vue.createApp({
     updateImage(variantImage) {
       this.image = variantImage
     }
+  },
+  computed: {
+    cartIsEmpty() {
+      return this.cart <= 0
+    },
+    inStock() {
+      return this.inventory > 0
+    },
+    almostSoldOut() {
+      return this.inventory <= this.reorderQuantity
+    }    
   }
 })
 

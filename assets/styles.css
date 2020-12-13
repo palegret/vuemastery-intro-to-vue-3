@@ -1,7 +1,7 @@
 body {
   background-color: #f2f2f2;
   color: #282828;
-  font-family: tahoma;
+  font-family: "Source Sans Pro", sans-serif;
   margin: 0px;
 }
 
@@ -21,10 +21,17 @@ body {
   width: 200px;
 }
 
+/*
+This is a better styling approach than conditionally applying .disabledButton,
+but I will use .disabledButton since it illustrates CSS class binding.
+*/
+
+/* 
 .button:disabled {
   cursor: not-allowed;
   opacity: 50%;
-}
+} 
+*/
 
 .cart {
   background-color: white;
@@ -40,14 +47,15 @@ body {
 .color-circle {
   border-radius: 50%;
   border: 2px solid #d8d8d8;
+  cursor: pointer;
   height: 50px;
   margin-top: 8px;
   width: 50px;
 }
 
 .disabledButton {
-  background-color: #d8d8d8;
   cursor: not-allowed;
+  opacity: 50%;
 }
 
 h1 {
@@ -93,7 +101,8 @@ li {
 }
 
 .out-of-stock-img {
-  opacity:0.5
+  cursor: not-allowed;
+  opacity: 0.5
 }
 
 p {
