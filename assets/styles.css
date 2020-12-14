@@ -15,7 +15,7 @@ body {
   cursor: pointer;
   font-size: 18px;
   height: 60px;
-  margin: 30px;
+  margin: 30px 10px;
   padding: 20px;
   text-align: center;
   width: 200px;
@@ -98,6 +98,10 @@ li {
           box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.57);
   height: 60px;
   margin-bottom: 25px;
+}
+
+.on-sale {
+  background-color: yellow;
 }
 
 .out-of-stock-img {
