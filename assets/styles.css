@@ -102,6 +102,8 @@ li {
 
 .on-sale {
   background-color: yellow;
+  font-size: 22px;
+  text-align: center;
 }
 
 .out-of-stock-img {
