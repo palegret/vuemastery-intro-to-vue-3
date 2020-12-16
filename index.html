@@ -11,8 +11,13 @@
   <body>
     <div id="app">
       <div class="nav-bar"></div>
-      <div class="cart">Cart({{ cart }})</div>
-      <product-display :premium="premium"></product-display>      
+      <div class="cart">Cart({{ cart.length }})</div>
+      <product-display 
+        :premium="premium" 
+        :cart-is-empty="cartIsEmpty"
+        @add-to-cart="addToCart" 
+        @remove-from-cart="removeFromCart"
+      ></product-display>
     </div>
     <script src="./main.js"></script>
     <script src="./components/ProductDisplay.js"></script>

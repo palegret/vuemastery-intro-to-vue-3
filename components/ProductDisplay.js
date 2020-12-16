@@ -3,6 +3,10 @@ app.component('product-display', {
     premium: {
       type: Boolean,
       required: true
+    },
+    cartIsEmpty: {
+      type: Boolean,
+      required: true
     }
   },
   template:
@@ -43,14 +47,14 @@ app.component('product-display', {
           <button
             :class="{ disabledButton: !inStock }"
             :disabled="!inStock"
-            @click="addToCart"
+            @click="onAddToCartClick"
             class="button"
           >Add to Cart</button>
 
           <button
             :class="{ disabledButton: !inStock || cartIsEmpty }"
             :disabled="!inStock || cartIsEmpty"
-            @click="removeFromCart"
+            @click="onRemoveFromCartClick"
             class="button"
           >Remove from Cart</button>
         </div>
@@ -61,39 +65,53 @@ app.component('product-display', {
       product: 'Socks',
       brand: 'Vue Mastery',
       description: 'A comfy pair of socks.',
-      details: ['50% cotton', '30% wool', '20% polyester'],
+      details: [
+        '50% cotton',
+        '30% wool',
+        '20% polyester'
+      ],
       variants: [
-        { id: 2234, color: 'green', image: './assets/images/socks_green.jpg', quantity: 50, reorder: 10, onSale: false },
-        { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 0, reorder: 10, onSale: true },
+        {
+          id: 2234,
+          color: 'green',
+          image: './assets/images/socks_green.jpg',
+          quantity: 50,
+          reorder: 10,
+          onSale: false
+        },
+        {
+          id: 2235,
+          color: 'blue',
+          image: './assets/images/socks_blue.jpg',
+          quantity: 0,
+          reorder: 10,
+          onSale: true
+        }
       ],
       sizes: ['S', 'M', 'L', 'XL'],
       selectedVariantIndex: 0
     }
   },
   methods: {
-    addToCart() {
-      this.cart += 1
+    onAddToCartClick() {
+      this.$emit('add-to-cart', this.selectedVariant.id)
     },
-    removeFromCart() {
-      this.cart -= 1
-      this.cart = this.cart < 0 ? 0 : this.cart
+    onRemoveFromCartClick() {
+      this.$emit('remove-from-cart', this.selectedVariant.id)
     },
     updateVariant(index) {
       this.selectedVariantIndex = index
     }
   },
   computed: {
-    cartIsEmpty() {
-      return this.cart <= 0
-    },
-    inStock() {
-      return this.selectedVariant.quantity > 0
-    },
     almostSoldOut() {
       return this.inStock && (this.selectedVariant.quantity <= this.selectedVariant.reorder)
     },
     image() {
       return this.selectedVariant.image
+    },
+    inStock() {
+      return this.selectedVariant.quantity > 0
     },
     selectedVariant() {
       return this.variants[this.selectedVariantIndex || 0] || {}
