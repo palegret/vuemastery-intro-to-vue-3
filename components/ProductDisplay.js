@@ -19,7 +19,7 @@ app.component('product-display', {
         <div class="product-info">
           <h1>
             {{ brand + ' ' + product }}
-            <span v-show="selectedVariant.onSale" class="on-sale">💥 Now On Sale! 💥</span>
+            <span v-show="selectedVariant.onSale" class="on-sale">💥 Sale! 💥</span>
           </h1>
 
           <p>{{ description }}</p>
@@ -30,9 +30,7 @@ app.component('product-display', {
 
           <p>Shipping: {{ shipping }}</p>
 
-          <ul>
-            <li v-for="detail in details">{{ detail }}</li>
-          </ul>
+          <product-details :details="details"></product-details>
 
           <div
             v-for="(variant, index) in variants"
@@ -42,7 +40,7 @@ app.component('product-display', {
             class="color-circle"
           ></div>
 
-          <div v-for="size in sizes" :key="size">{{ size }}</div>
+          <!--<div v-for="size in sizes" :key="size">{{ size }}</div>-->
 
           <button
             :class="{ disabledButton: !inStock }"
@@ -57,9 +55,13 @@ app.component('product-display', {
             @click="onRemoveFromCartClick"
             class="button"
           >Remove from Cart</button>
+
+          <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+          <review-form @review-submitted="addReview"></review-form>      
         </div>
       </div>
-    </div>`,
+    </div>
+  `,
   data() {
     return {
       product: 'Socks',
@@ -89,10 +91,14 @@ app.component('product-display', {
         }
       ],
       sizes: ['S', 'M', 'L', 'XL'],
-      selectedVariantIndex: 0
+      selectedVariantIndex: 0,
+      reviews: []
     }
   },
   methods: {
+    addReview(review) {
+      this.reviews.push(review)
+    },
     onAddToCartClick() {
       this.$emit('add-to-cart', this.selectedVariant.id)
     },
